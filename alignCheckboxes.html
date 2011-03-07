@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>jQuery alignCheckboxes Plug-in</title>
+<script type="text/javascript" src="jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="jquery.aligncheckboxes.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        /*
+         * basic usage:
+         *   $('.trigger').alignCheckboxes({selector:'.class_A'});
+         *
+         * it is omissible:
+         *   $('.trigger').alignCheckboxes('.class_A');
+         *
+         * if all the check boxes are targets, you do not have to specify anything:
+         *   $('.trigger').alignCheckboxes();
+         *
+        */
+
+         $('.trigger').alignCheckboxes();
+    });
+
+</script>
+</head><body>
+
+    <h1>jQuery alignCheckboxes Plug-in</h1>
+
+    <form>
+
+        <input type="checkbox" class="trigger" /> <a href="javascript:void(0);" class="trigger">trigger</a>
+
+        <ul>
+            <input type="checkbox" class="class_A" /> class_A
+            <input type="checkbox" class="class_A" /> class_A
+            <input type="checkbox" class="class_A" /> class_A
+            <input type="checkbox" class="class_B" /> class_B
+            <input type="checkbox" class="class_B" /> class_B
+        </ul>
+
+    </form>
+    
+</body></html>
