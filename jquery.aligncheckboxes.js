@@ -7,11 +7,17 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *
  * Revision: $Rev$
- * Version: 0.0.1
+ * Version: 0.0.2
  *
 */
 
 (function ($) {
+
+    function is_checkbox(t){
+        if( $(t).context.nodeName.toUpperCase() == 'INPUT' && $(t).attr('type') == 'checkbox' )
+        return true;
+        return false;
+    }
 
     $.fn.alignCheckboxes = function (options){
 
@@ -24,12 +30,6 @@
 
         var setting = $.extend(defaults,options);
         
-        var is_checkbox = function (t){
-            if( $(t).context.nodeName.toUpperCase() == 'INPUT' && $(t).attr('type') == 'checkbox' )
-            return true;
-            return false;
-        };
-
         var checkbox_triggers = [];
         
         $(this).each(function (){
@@ -44,16 +44,19 @@
             return false;
         };
         
-        var state_to_set_trigger = function (){
-            if( $(setting.selector).filter(function (){ return ! is_trigger(this) }).size()
-             == $(setting.selector).filter(function (){ return ! is_trigger(this) }).filter(':checked').size()
-            )
+        var checkboxes = function (){
+            return $(setting.selector).filter(function (){ return ! is_trigger(this) });
+        };
+        
+        var get_state_to_set_trigger = function (){
+            var cb = checkboxes();
+            if( cb.size() == cb.filter(':checked').size() )
             return true;
             return false;
         };
 
         var reset_trigger = function (){
-            var al = state_to_set_trigger();
+            var al = get_state_to_set_trigger();
             $.each(checkbox_triggers, function (i,v){
                 $(v).attr('checked',al);
             });
@@ -64,15 +67,15 @@
             var trigger = this;
             
             $(trigger).click(function (){
-                var al = is_checkbox(trigger) ? $(trigger).attr('checked') : ( ! state_to_set_trigger() );
-                $(setting.selector).filter(function (){ return ! is_trigger(this) }).each( function (){
+                var al = is_checkbox(trigger) ? $(trigger).attr('checked') : ( ! get_state_to_set_trigger() );
+                checkboxes().each(function (){
                     $(this).attr('checked',al);
                 });
                 reset_trigger();
             });
 
             if( 0 < checkbox_triggers.length ){
-                $(setting.selector).filter(function (){ return ! is_trigger(this) }).each(function (){
+                checkboxes().each(function (){
                     $(this).click(function (){
                         reset_trigger()
                     });
